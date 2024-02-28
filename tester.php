@@ -1,6 +1,5 @@
 <?php
 
-
 /*
 array(3) {
   [0]=>
@@ -141,7 +140,7 @@ $descriptorspec = array(
     1 => array("pipe", "w")
 );
 
-$process = proc_open("php " . $argv[2], $descriptorspec, $pipes);
+$process = proc_open("php ".$argv[2], $descriptorspec, $pipes);
 
 if (is_resource($process)) {
 
@@ -154,7 +153,7 @@ if (is_resource($process)) {
     $retval = proc_close($process);
 
     echo "-----YOUR-RESPONSE-BEGIN--------------------\n";
-    echo "(" . $content . ")\n";
+    echo "(".$content.")\n";
     echo "-----YOUR-RESPONSE-END----------------------\n\n";
     //echo "retval=$retval\n\n";
 
@@ -163,11 +162,12 @@ if (is_resource($process)) {
     $c2 = preg_replace("/\r/", "", $c2);
     if ($c2 == $answers[$argv[1]]) {
         echo "response is correct :)";
-    } else {
+    }
+    else {
         echo "-----CORRECT-RESPONSE-BEGIN--------------------\n";
-        echo "(" . $answers[$argv[1]] . ")\n";
+        echo "(".$answers[$argv[1]].")\n";
         echo "-----CORRECT-RESPONSE-END----------------------\n\n";
-        echo strlen($c2) . " vs " . strlen($answers[$argv[1]]) . "\n";
+        echo strlen($c2)." vs ".strlen($answers[$argv[1]])."\n";
 
         echo "response is incorrect! SEE ABOVE\n";
     }

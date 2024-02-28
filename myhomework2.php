@@ -35,16 +35,24 @@ function parseTcpStringAsHttpRequest($string)
 function getHeaders($string)
 {
     $lines = explode("\n", $string);
-    $currentLine = $lines[3];
-    while (!empty($currentLine)){
 
+    $headers = array();
+
+    for ($i = 1; $i <sizeof($lines); $i++) {
+        if (strpos($lines[$i] , ":")){
+            $keyAndValue= explode(": ",$lines[$i]);
+            //$header[$keyAndValue[0]]= $keyAndValue[1];
+            $headers[] = $keyAndValue;
+        }
     }
+
+    return $headers;
 }
 
 function getBody($string)
 {
-    $result = explode("\n", $string);
-    return end($result);
+    $lines= explode("\n", $string);
+    return end($lines);
 }
 
 function getUri($string)
