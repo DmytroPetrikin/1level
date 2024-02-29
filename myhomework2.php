@@ -38,9 +38,9 @@ function getHeaders($string)
 
     $headers = array();
 
-    for ($i = 1; $i <sizeof($lines); $i++) {
-        if (strpos($lines[$i] , ":")){
-            $keyAndValue= explode(": ",$lines[$i]);
+    for ($i = 1; $i < sizeof($lines); $i++) {
+        if (strpos($lines[$i], ":")) {
+            $keyAndValue = explode(": ", $lines[$i]);
             //$header[$keyAndValue[0]]= $keyAndValue[1];
             $headers[] = $keyAndValue;
         }
@@ -51,8 +51,11 @@ function getHeaders($string)
 
 function getBody($string)
 {
-    $lines= explode("\n", $string);
-    return end($lines);
+    $lines = explode("\n", $string);
+    $body = end($lines);
+    if (!strpos($body, ":")) {
+        return $body;
+    } else return "";
 }
 
 function getUri($string)
