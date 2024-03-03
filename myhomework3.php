@@ -20,18 +20,15 @@ $contents = readHttpLikeInput();
 
 function outputHttpResponse($statuscode, $statusmessage, $headers, $body)
 {
-    $firstLine = "HTTP/1.1 $statuscode $statusmessage";
-    echo $firstLine . "\n";
+    $response = "HTTP/1.1 $statuscode $statusmessage\n";
+    $response .= "Date: " . date("l, d F  Y h:i:sa") . "\n";
+    $response .= "Server: Apache/2.2.14 (Win32)\n";
+    $response .= "Content-Length: " . strlen($body) . "\n";
+    $response .= "Connection: Closed\n";
+    $response .= "Content-Type: text/html; charset=utf-8\n";
+    $response .= "\n$body";
 
-    $date = "Date: " . date("l, d F  Y h:i:sa");
-    echo $date . "\n";
-
-    foreach ($headers as $subArray) {
-        foreach ($subArray as $key => $value) {
-            echo $key . ": " . $value . "\n";
-        }
-    }
-    echo "\n$body";
+    echo $response;
 }
 
 function processHttpRequest($method, $uri, $headers, $body)
@@ -108,8 +105,6 @@ function getHeaders($string)
             $header = [
                 $keyAndValue[0] => $keyAndValue[1]
             ];
-            //$header[$keyAndValue[0]]= $keyAndValue[1];
-            //$headers[] = $keyAndValue;
             $headers[] = $header;
         }
     }
@@ -138,11 +133,9 @@ function getMethod($string)
     return $array[0];
 }
 
-$test = "GET /sum?nums=1,2,3,4 HTTP/1.1
-Server: Apache/2.2.14 (Win32)
-Connection: Closed
-Content-Type: text/html; charset=utf-8
-Content-Length: 2";
+//$mystr = "GET /sum=1,2,3 HTTP/1.1
+//Host: student.shpp.me
+//";
 
 $http = parseTcpStringAsHttpRequest($contents);
 processHttpRequest($http["method"], $http["uri"], $http["headers"], $http["body"]);
